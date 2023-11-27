@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const { graphqlHTTP } = require("express-graphql");
 const { schema } = require("./schema/schema");
+const cors = require("cors");
 const populateDatabase = require("./setup");
 
 mongoose
@@ -18,6 +19,7 @@ mongoose
   });
 
 app.use(morgan("dev"));
+app.use(cors());
 
 app.use(
   "/graphql",
