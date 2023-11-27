@@ -1,36 +1,19 @@
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
-
-const GET_PRODUCTS = gql`
-  {
-    products {
-      name
-      imageUrl
-      amount
-      currency
-    }
-  }
-`;
+import ProductList from "./components/ProductList";
+import { AppBar, Toolbar, Typography, Container } from "@mui/material";
 
 function App() {
-  const { loading, error, data } = useQuery(GET_PRODUCTS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) console.log(error);
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
     <div>
-      <h1>Product List</h1>
-      <ul>
-        {data.products.map((product, index) => (
-          <li key={index}>
-            <img src={product.imageUrl} alt={product.name} />
-            <p>{product.name}</p>
-            <p>{`${product.amount} ${product.currency}`}</p>
-          </li>
-        ))}
-      </ul>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">Product Catalog</Typography>
+        </Toolbar>
+      </AppBar>
+      <Container style={{ padding: "20px" }}>
+        <h1>Product List</h1>
+        <ProductList />
+      </Container>
     </div>
   );
 }
