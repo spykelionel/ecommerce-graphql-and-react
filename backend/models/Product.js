@@ -7,4 +7,4 @@ const Product = mongoose.model("Product", {
   currency: String,
 });
 
-exports.default = Product;
+module.exports = Product;
