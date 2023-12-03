@@ -25,26 +25,29 @@ const GET_PRODUCTS = gql`
 
 const ProductList = () => {
   const [page, setPage] = useState(1);
-  const productsPerPage = 100;
-  const [countProduct, setCountProduct] = useState(productsPerPage);
+  const limit = 100;
+  const [countProduct, setCountProduct] = useState(limit);
 
   const { loading, error, data, fetchMore } = useQuery(GET_PRODUCTS, {
-    variables: { start: 0, limit: productsPerPage },
+    variables: { start: 0, limit },
   });
 
   const [products, setProducts] = useState(data?.products);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(false);
-    setProducts(data?.products);
+    if (loading) setIsLoading(true);
+    else {
+      setProducts(data?.products);
+      setIsLoading(false);
+    }
   }, [data]);
   useEffect(() => setCountProduct(products?.length), [products]);
 
   const loadMoreProducts = () => {
     setIsLoading(true);
     fetchMore({
-      variables: { start: page * productsPerPage, limit: productsPerPage },
+      variables: { start: page * limit, limit: limit },
     }).then(({ data: moreData }) => {
       setProducts([...products, ...moreData?.products]);
       setIsLoading(false);
