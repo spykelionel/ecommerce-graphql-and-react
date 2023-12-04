@@ -25,6 +25,7 @@ const GET_PRODUCTS = gql`
       imageUrl
       amount
       currency
+      id
     }
   }
 `;
@@ -72,7 +73,7 @@ const ProductList = () => {
       </Container>
       <Grid container spacing={3}>
         {products?.map((product) => (
-          <Grid item key={product?.name} xs={12} sm={6} md={4}>
+          <Grid item key={product?.id} xs={12} sm={6} md={4}>
             <Card>
               {product?.imageUrl ? (
                 <CardMedia
@@ -90,8 +91,7 @@ const ProductList = () => {
               <CardContent>
                 <Typography variant="h6">{product?.name}</Typography>
                 <Typography variant="body1">
-                  Price: {product?.amount?.toString().slice(0, 4)}{" "}
-                  {product?.currency}
+                  Price: {product?.amount?.toFixed(2)} {product?.currency}
                 </Typography>
                 {/* Add more product details as needed */}
                 <Button
