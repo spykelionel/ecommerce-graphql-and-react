@@ -35,6 +35,8 @@ const ProductList = () => {
   const [products, setProducts] = useState(data?.products);
   const [isLoading, setIsLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (loading) setIsLoading(true);
     else {
