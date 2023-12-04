@@ -1,25 +1,21 @@
 import React from "react";
-import ProductList from "./components/ProductList";
-import { AppBar, Toolbar, Typography, Container } from "@mui/material";
+import { Provider } from "react-redux";
+import "./index.css";
 
-import { cartSelector } from "./features/product/productSlice";
-import { useSelector } from "react-redux";
+import { ApolloProvider } from "@apollo/client";
+import { store } from "./store";
+import { RouterProvider } from "react-router-dom";
+import { router, client } from "./config";
 
 function App() {
-  const cart = useSelector(cartSelector);
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <Typography variant="h6">Product Catalog</Typography>
-          <Typography variant="h6">Cart {cart.length}</Typography>
-        </Toolbar>
-      </AppBar>
-      <Container style={{ padding: "20px" }}>
-        <h1>Product List</h1>
-        <ProductList />
-      </Container>
-    </div>
+    <>
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <RouterProvider router={router} />
+        </ApolloProvider>
+      </Provider>
+    </>
   );
 }
 
