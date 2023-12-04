@@ -5,12 +5,18 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Container,
   Button,
   Typography,
   Grid,
   CircularProgress,
   Box,
 } from "@mui/material";
+
+import { useDispatch } from "react-redux";
+
+import { addToCart } from "../features/product/productSlice";
+import Header from "./Header";
 
 const GET_PRODUCTS = gql`
   query GetProducts($start: Int, $limit: Int) {
@@ -49,7 +55,7 @@ const ProductList = () => {
   const loadMoreProducts = () => {
     setIsLoading(true);
     fetchMore({
-      variables: { start: page * limit, limit: limit },
+      variables: { start: page * limit, limit },
     }).then(({ data: moreData }) => {
       setProducts([...products, ...moreData?.products]);
       setIsLoading(false);
@@ -58,11 +64,12 @@ const ProductList = () => {
     setIsLoading(false);
   };
 
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>Error: {error.message}</p>;
-
   return (
     <div>
+      <Header />
+      <Container style={{ padding: "20px" }}>
+        <h1>Product List</h1>
+      </Container>
       <Grid container spacing={3}>
         {products?.map((product) => (
           <Grid item key={product?.name} xs={12} sm={6} md={4}>
@@ -90,7 +97,7 @@ const ProductList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => alert(`${product?.name} added to cart`)}
+                  onClick={() => dispatch(addToCart(product))}
                 >
                   Add to Cart
                 </Button>
