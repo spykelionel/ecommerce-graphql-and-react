@@ -9,7 +9,7 @@ function Header() {
   const cart = useSelector(cartSelector);
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar style={{ display: "flex", justifyContent: "space-evenly" }}>
         <Typography variant="h6">
           <Link to="/">Product Catalog</Link>
